@@ -48,13 +48,34 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const fetchOptions: RequestInit = {
-      method: method || 'GET',
-      headers: headers || {},
-      signal: AbortSignal.timeout(30_000), // 30s server-side timeout
+    // Strip headers that could cause issues with APIs:
+    // - 'host' must match the target, not our server
+    // - 'origin' / 'referer' can trigger CORS rejections on some APIs
+    // - 'content-type' on GET/HEAD requests can look suspicious
+    const STRIP_HEADERS = new Set([
+      'host', 'origin', 'referer', 'x-forwarded-for',
+      'x-forwarded-host', 'x-forwarded-proto', 'x-real-ip',
+    ])
+
+    const cleanMethod = (method || 'GET').toUpperCase()
+    const userHeaders: Record<string, string> = headers || {}
+
+    const forwardedHeaders: Record<string, string> = {}
+    for (const [key, value] of Object.entries(userHeaders)) {
+      const lower = key.toLowerCase()
+      if (STRIP_HEADERS.has(lower)) continue
+      // Don't forward Content-Type on bodyless requests
+      if (lower === 'content-type' && ['GET', 'HEAD', 'DELETE'].includes(cleanMethod)) continue
+      forwardedHeaders[key] = value as string
     }
 
-    if (body && !['GET', 'HEAD'].includes(method)) {
+    const fetchOptions: RequestInit = {
+      method: cleanMethod,
+      headers: forwardedHeaders,
+      signal: AbortSignal.timeout(30_000),
+    }
+
+    if (body && !['GET', 'HEAD'].includes(cleanMethod)) {
       fetchOptions.body = typeof body === 'string' ? body : JSON.stringify(body)
     }
 

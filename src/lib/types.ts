@@ -33,8 +33,33 @@ export interface HistoryItem {
   time?: number
 }
 
-export type RequestTab = 'params' | 'headers' | 'body'
+export type RequestTab = 'params' | 'headers' | 'body' | 'auth'
 export type ResponseTab = 'body' | 'headers'
+
+export type AuthType = 'none' | 'bearer' | 'basic' | 'apikey'
+
+export interface AuthConfig {
+  type: AuthType
+  // Bearer
+  token: string
+  // Basic
+  username: string
+  password: string
+  // API Key
+  apiKeyName: string
+  apiKeyValue: string
+  apiKeyIn: 'header' | 'query'
+}
+
+export const DEFAULT_AUTH: AuthConfig = {
+  type: 'none',
+  token: '',
+  username: '',
+  password: '',
+  apiKeyName: '',
+  apiKeyValue: '',
+  apiKeyIn: 'header',
+}
 
 export const METHOD_COLORS: Record<HttpMethod, string> = {
   GET: 'text-emerald-400',

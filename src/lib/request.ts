@@ -1,4 +1,41 @@
-import { KeyValuePair, HttpMethod, RequestResponse } from './types'
+import { KeyValuePair, HttpMethod, RequestResponse, AuthConfig } from './types'
+
+export function resolveAuthHeaders(
+  auth: AuthConfig,
+  headers: KeyValuePair[],
+  params: KeyValuePair[]
+): { headers: KeyValuePair[]; params: KeyValuePair[] } {
+  const h = headers.filter((x) => x.key.toLowerCase() !== 'authorization' || auth.type === 'none')
+  const p = params.filter((x) => x.key !== auth.apiKeyName || auth.type !== 'apikey')
+
+  if (auth.type === 'bearer' && auth.token) {
+    return {
+      headers: [...h, { id: 'auth-bearer', key: 'Authorization', value: `Bearer ${auth.token}`, enabled: true }],
+      params: p,
+    }
+  }
+  if (auth.type === 'basic' && auth.username) {
+    const encoded = btoa(`${auth.username}:${auth.password}`)
+    return {
+      headers: [...h, { id: 'auth-basic', key: 'Authorization', value: `Basic ${encoded}`, enabled: true }],
+      params: p,
+    }
+  }
+  if (auth.type === 'apikey' && auth.apiKeyName && auth.apiKeyValue) {
+    if (auth.apiKeyIn === 'header') {
+      return {
+        headers: [...h, { id: 'auth-apikey', key: auth.apiKeyName, value: auth.apiKeyValue, enabled: true }],
+        params: p,
+      }
+    } else {
+      return {
+        headers: h,
+        params: [...p, { id: 'auth-apikey', key: auth.apiKeyName, value: auth.apiKeyValue, enabled: true }],
+      }
+    }
+  }
+  return { headers: h, params: p }
+}
 
 export function buildUrlWithParams(url: string, params: KeyValuePair[]): string {
   const active = params.filter((p) => p.enabled && p.key.trim())

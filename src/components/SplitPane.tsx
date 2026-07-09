@@ -37,7 +37,7 @@ export default function SplitPane({ left, right }: Props) {
   return (
     <div id="split-container" className="flex flex-1 overflow-hidden">
       <div
-        className="flex flex-col overflow-hidden border-r border-zinc-800"
+        className="flex flex-col overflow-hidden border-r border-zinc-200 dark:border-zinc-800"
         style={{ width: `${splitPos}%` }}
       >
         {left}
@@ -47,7 +47,7 @@ export default function SplitPane({ left, right }: Props) {
       <motion.div
         whileHover={{ backgroundColor: 'rgba(249, 115, 22, 0.3)' }}
         onMouseDown={handleMouseDown}
-        className="w-1 shrink-0 bg-zinc-800 cursor-col-resize transition-colors"
+        className="w-1 shrink-0 bg-zinc-200 dark:bg-zinc-800 cursor-col-resize transition-colors"
         title="Drag to resize"
       />
 

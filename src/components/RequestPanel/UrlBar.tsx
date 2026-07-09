@@ -30,7 +30,7 @@ export default function UrlBar({ onSend, onCancel, isPending }: Props) {
       <select
         value={method}
         onChange={(e) => setMethod(e.target.value as HttpMethod)}
-        className={`bg-zinc-900 border border-zinc-700/60 rounded-lg px-3 py-2 text-sm font-bold font-mono focus:outline-none focus:border-orange-500/50 cursor-pointer transition-colors ${METHOD_COLORS[method]}`}
+        className={`bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-lg px-3 py-2 text-sm font-bold font-mono focus:outline-none focus:border-orange-400 dark:focus:border-orange-500/50 cursor-pointer transition-colors ${METHOD_COLORS[method]}`}
       >
         {METHODS.map((m) => (
           <option key={m} value={m}>
@@ -46,7 +46,7 @@ export default function UrlBar({ onSend, onCancel, isPending }: Props) {
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="https://api.example.com/endpoint"
-          className="w-full bg-zinc-900 border border-zinc-700/60 rounded-lg px-4 py-2 text-sm text-zinc-200 placeholder:text-zinc-700 focus:outline-none focus:border-orange-500/50 font-mono transition-colors"
+          className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-lg px-4 py-2 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-700 focus:outline-none focus:border-orange-400 dark:focus:border-orange-500/50 font-mono transition-colors"
         />
         {url && !valid && (
           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-red-500/70">
@@ -61,13 +61,13 @@ export default function UrlBar({ onSend, onCancel, isPending }: Props) {
         disabled={!isPending && (!valid || !url)}
         className={`font-semibold px-5 py-2 rounded-lg text-sm transition-colors cursor-pointer disabled:cursor-not-allowed min-w-20 ${
           isPending
-            ? 'bg-zinc-700 hover:bg-red-500/80 text-zinc-300 hover:text-white'
-            : 'bg-orange-500 hover:bg-orange-400 disabled:bg-zinc-800 disabled:text-zinc-600 text-white'
+            ? 'bg-zinc-200 dark:bg-zinc-700 hover:bg-red-500/80 text-zinc-600 dark:text-zinc-300 hover:text-white'
+            : 'bg-orange-500 hover:bg-orange-400 disabled:bg-zinc-200 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-600 text-white'
         }`}
       >
         {isPending ? (
           <span className="flex items-center justify-center gap-2">
-            <span className="w-3 h-3 border-2 border-zinc-500 border-t-white rounded-full animate-spin" />
+            <span className="w-3 h-3 border-2 border-zinc-400 dark:border-zinc-500 border-t-white rounded-full animate-spin" />
             Cancel
           </span>
         ) : (

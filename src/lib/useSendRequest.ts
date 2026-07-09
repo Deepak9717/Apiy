@@ -1,25 +1,33 @@
 import { useMutation } from '@tanstack/react-query'
-import { sendRequest, generateId } from '@/lib/request'
+import { sendRequest, generateId, resolveAuthHeaders } from '@/lib/request'
 import { useRequestConfigStore } from '@/store/useRequestConfigStore'
 import { useHistoryStore } from '@/store/useHistoryStore'
 import { RequestResponse } from '@/lib/types'
 import { useRef } from 'react'
+import { useResponseStore } from '@/store/useResponseStore'
 
 export function useSendRequest() {
-  const { method, url, headers, params, body } = useRequestConfigStore()
+  const { method, url, headers, params, body, auth } = useRequestConfigStore()
   const addHistory = useHistoryStore((s) => s.add)
   const abortRef = useRef<AbortController | null>(null)
 
+  const { setResponse, setPending, setError } = useResponseStore()
+
   const mutation = useMutation<RequestResponse, Error>({
     mutationFn: async () => {
-      // Cancel any in-flight request
       abortRef.current?.abort()
       abortRef.current = new AbortController()
-
-      return sendRequest(method, url, headers, params, body, abortRef.current.signal)
+      const resolved = resolveAuthHeaders(auth, headers, params)
+      return sendRequest(method, url, resolved.headers, resolved.params, body, abortRef.current.signal)
     },
-
+    onMutate: () => {
+      setPending(true)
+      setError(null)
+    },
     onSuccess: (data) => {
+      setResponse(data)
+      setPending(false)
+      setError(null)
       addHistory({
         id: generateId(),
         method,
@@ -29,13 +37,17 @@ export function useSendRequest() {
         time: data.time,
       })
     },
-
-    retry: false, // No auto-retry — user should decide
+    onError: (err) => {
+      setError(err)
+      setPending(false)
+    },
+    retry: false,
   })
 
   const cancel = () => {
     abortRef.current?.abort()
     mutation.reset()
+    setPending(false)
   }
 
   return {
@@ -43,7 +55,6 @@ export function useSendRequest() {
     cancel,
     isPending: mutation.isPending,
     isError: mutation.isError,
-    isSuccess: mutation.isSuccess,
     response: mutation.data ?? null,
     error: mutation.error,
     reset: mutation.reset,

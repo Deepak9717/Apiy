@@ -51,20 +51,20 @@ export default function KeyValueEditor({
               value={pair.key}
               onChange={(e) => update(pair.id, 'key', e.target.value)}
               placeholder={keyPlaceholder}
-              className="flex-1 bg-zinc-900 border border-zinc-700/60 rounded px-3 py-1.5 text-sm text-zinc-200 placeholder:text-zinc-700 focus:outline-none focus:border-orange-500/50 font-mono transition-colors"
+              className="flex-1 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded px-3 py-1.5 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-700 focus:outline-none focus:border-orange-400 dark:focus:border-orange-500/50 font-mono transition-colors"
             />
             <input
               type="text"
               value={pair.value}
               onChange={(e) => update(pair.id, 'value', e.target.value)}
               placeholder={valuePlaceholder}
-              className="flex-1 bg-zinc-900 border border-zinc-700/60 rounded px-3 py-1.5 text-sm text-zinc-200 placeholder:text-zinc-700 focus:outline-none focus:border-orange-500/50 font-mono transition-colors"
+              className="flex-1 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded px-3 py-1.5 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-700 focus:outline-none focus:border-orange-400 dark:focus:border-orange-500/50 font-mono transition-colors"
             />
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => remove(pair.id)}
-              className="text-zinc-700 hover:text-red-400 transition-colors px-1 shrink-0 text-lg leading-none"
+              className="text-zinc-400 hover:text-red-500 dark:text-zinc-700 dark:hover:text-red-400 transition-colors px-1 shrink-0 text-lg leading-none"
             >
               ×
             </motion.button>
@@ -75,7 +75,7 @@ export default function KeyValueEditor({
       <motion.button
         whileHover={{ x: 2 }}
         onClick={add}
-        className="self-start mt-1 text-xs text-zinc-600 hover:text-orange-400 transition-colors"
+        className="self-start mt-1 text-xs text-zinc-400 hover:text-orange-500 dark:text-zinc-600 dark:hover:text-orange-400 transition-colors"
       >
         + Add row
       </motion.button>

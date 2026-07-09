@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { Geist_Mono } from 'next/font/google'
 import './globals.css'
+import ThemeBody from '@/components/ThemeBody'
 import Providers from '@/providers/QueryProvider'
+import TopNav from '@/components/TopNav'
 
 const geistMono = Geist_Mono({
   subsets: ['latin'],
@@ -9,16 +11,23 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'API Forge — REST Client',
-  description: 'A clean, fast API testing tool built with Next.js',
+  title: 'APIY - Simple API Testing Tool',
+  description: 'A clean, fast API testing tool — REST + GraphQL',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${geistMono.variable} bg-zinc-950 text-zinc-100 antialiased`}>
-        <Providers>{children}</Providers>
-      </body>
+    <html lang="en">
+      <ThemeBody>
+        <Providers>
+          <div className="flex flex-col h-screen overflow-hidden">
+            <TopNav />
+            <main className="flex flex-1 overflow-hidden">
+              {children}
+            </main>
+          </div>
+        </Providers>
+      </ThemeBody>
     </html>
   )
 }
