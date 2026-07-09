@@ -11,7 +11,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'APIY - Simple API Testing Tool',
+  title: 'APIY - API Testing Tool',
   description: 'A clean, fast API testing tool — REST + GraphQL',
 }
 
