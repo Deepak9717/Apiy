@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## APIY — Browser-Based API Testing Tool
+APIY is a high-performance, developer-focused API client built for the modern web. It features a minimal, Vercel-inspired dark aesthetic and provides robust testing capabilities for REST and GraphQL endpoints without browser-enforced CORS limitations.
 
-## Getting Started
+## 🚀 Core Features
 
-First, run the development server:
+* Dual-Protocol Testing: Full-featured REST client alongside a dedicated GraphQL workspace featuring schema introspection and an interactive type/field explorer.
+* Secure Serverless Proxy: Bypasses browser CORS constraints via a custom /api/proxy endpoint with built-in SSRF protection (blocks private subnet ranges and cloud metadata endpoints).
+* Advanced Auth Layer: Native support for Bearer tokens, Basic Auth, and API Keys, complete with full NextAuth.js user authentication (MongoDB, bcrypt, JWT sessions).
+* Granular State Architecture: Isolated state management across three dedicated Zustand stores (Request, History, UI) leveraging Immer middleware to eliminate rendering bottlenecks.
+* React Query Integration: Asynchronous lifecycle states (loading, cancellation, errors) managed natively via useMutation hooks integrated with browser AbortController engines.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* Framework: Next.js 15 (App Router) + TypeScript
+* Styling: Tailwind CSS + Framer Motion (Linear-style UI)
+* State & Data: Zustand (with Immer) + React Query
+* Backend & Auth: NextAuth.js + MongoDB + Mongoose
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 💻 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   1. Clone and Install:
+   
+   git clone https://github.com
+   cd apiy
+   npm install
+   
+   2. Configure Environment:
+   Create a .env.local file:
+   
+   MONGODB_URI=your_mongodb_connection_string
+   NEXTAUTH_SECRET=your_nextauth_jwt_secret
+   NEXTAUTH_URL=http://localhost:3000
+   
+   3. Run Development Server:
+   
+   npm run dev
