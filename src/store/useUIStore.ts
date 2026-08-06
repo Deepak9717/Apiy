@@ -2,7 +2,7 @@
 
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-import { ResponseTab } from '@/lib/types'
+import { ResponseTab } from '@/types/rest'
 import { persist } from 'zustand/middleware'
 
 interface UIStore {

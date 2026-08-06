@@ -1,22 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-/* Enable class-based dark mode for Tailwind */
+/* Enable class-based dark mode for Tailwind v4 */
 @custom-variant dark (&:where(.dark, .dark *));
 
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; padding: 0; }
+:root {
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
 
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #52525b; }
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
 
 /* Light mode scrollbar */
-html:not(.dark) ::-webkit-scrollbar-thumb { background: #d4d4d8; }
-html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+}
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
 
-select option { background: #09090b; color: #e4e4e7; }
-html:not(.dark) select option { background: #ffffff; color: #18181b; }
+select option {
+  background: #09090b;
+  color: #e4e4e7;
+}
+html:not(.dark) select option {
+  background: #ffffff;
+  color: #18181b;
+}
+
+/* Glassmorphism panel styles */
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.dark .glass-panel {
+  background-color: rgba(9, 9, 11, 0.45);
+}
+
+.glass-header {
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.dark .glass-header {
+  background-color: rgba(9, 9, 11, 0.6);
+}
+
+/* CodeMirror theme overrides to blend nicely */
+.cm-editor {
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  background-color: transparent !important;
+}
+.cm-gutters {
+  background-color: transparent !important;
+  border-right: 1px solid rgba(63, 63, 70, 0.2) !important;
+  color: #71717a !important;
+}
+.dark .cm-gutters {
+  border-right: 1px solid rgba(63, 63, 70, 0.4) !important;
+  color: #52525b !important;
+}
 
 /* Smooth transitions */
-body, header, aside, main, nav { transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+body, header, aside, main, nav {
+  transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}

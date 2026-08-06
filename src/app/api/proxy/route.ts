@@ -14,6 +14,7 @@ const BLOCKED_PATTERNS = [
 ]
 
 function isBlockedHost(hostname: string): boolean {
+  if (process.env.NODE_ENV === 'development') return false
   return BLOCKED_PATTERNS.some((pattern) => pattern.test(hostname))
 }
 
