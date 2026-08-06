@@ -19,18 +19,15 @@ APIY is a high-performance, developer-focused API client built for the modern we
 ## 💻 Getting Started
 
    1. Clone and Install:
-   
-   git clone https://github.com
-   cd apiy
-   npm install
+      git clone https://github.com
+      cd apiy
+      npm install
    
    2. Configure Environment:
-   Create a .env.local file:
-   
-   MONGODB_URI=your_mongodb_connection_string
-   NEXTAUTH_SECRET=your_nextauth_jwt_secret
-   NEXTAUTH_URL=http://localhost:3000
+      Create a .env.local file:
+      MONGODB_URI=your_mongodb_connection_string
+      NEXTAUTH_SECRET=your_nextauth_jwt_secret
+      NEXTAUTH_URL=http://localhost:3000
    
    3. Run Development Server:
-   
-   npm run dev
+      npm run dev
