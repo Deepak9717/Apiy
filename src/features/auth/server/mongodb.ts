@@ -1,9 +1,17 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.MONGODB_URI as string
+const rawUri = process.env.MONGODB_URI ?? ''
+const MONGODB_URI = rawUri.trim().replace(/^['"]|['"]$/g, '')
 
 if (!MONGODB_URI) {
-  throw new Error('Please define MONGODB_URI in .env.local')
+  throw new Error('Please define MONGODB_URI in your environment variables')
+}
+
+if (!MONGODB_URI.startsWith('mongodb://') && !MONGODB_URI.startsWith('mongodb+srv://')) {
+  throw new Error(
+    `MONGODB_URI is set but doesn't look like a valid connection string (starts with "${MONGODB_URI.slice(0, 12)}..."). ` +
+      'Check for wrapping quotes, a stray "MONGODB_URI=" prefix, or extra whitespace in your host\'s env var settings.'
+  )
 }
 
 // Cache connection across hot reloads in development

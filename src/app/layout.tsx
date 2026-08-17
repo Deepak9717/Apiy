@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'APIY - API Testing Tool',
   description: 'A clean, fast API testing tool — REST + GraphQL',
+  icons: {
+    icon: '/icon.svg',
+  }
 }
 
 // Runs synchronously before first paint (blocking <head> script) so the
