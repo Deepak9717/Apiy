@@ -12,29 +12,38 @@ import { useUIStore } from '@/store/useUIStore'
 export default function GraphQLPage() {
   const [schemaOpen, setSchemaOpen] = useState(true)
   const { history, setQuery, setUrl } = useGraphQLStore();
-  const { sidebarOpen, toggleSidebar, theme, toggleTheme } = useUIStore()
+  const { sidebarOpen, toggleSidebar } = useUIStore()
 
   return (
     <div className="flex flex-1 overflow-hidden">
       
       {/* History sidebar */}
+      {!sidebarOpen ? (
+        <div className="flex flex-col items-center py-3.5 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 shrink-0">
+          <motion.button
+            whileHover={{ scale: 1.05, backgroundColor: 'rgba(63, 63, 70, 0.08)' }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleSidebar}
+            className="p-1.5 rounded-xl text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-300 transition-colors"
+            title="Show sidebar"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </motion.button>
+        </div>
+      ) : (
       <aside className="w-52 border-r border-zinc-200 dark:border-zinc-800 flex flex-col bg-zinc-50 dark:bg-zinc-950 shrink-0">
         <motion.button
           whileHover={{ scale: 1.05, backgroundColor: 'rgba(63, 63, 70, 0.08)' }}
           whileTap={{ scale: 0.95 }}
           onClick={toggleSidebar}
           className="p-1.5 rounded-xl text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-300 transition-colors"
-          title={sidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
+          title="Hide sidebar"
         >
-          {sidebarOpen ? (
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-          ) : (
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-          )}
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
         </motion.button>
         <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
           <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-600 uppercase tracking-wider">History</span>
@@ -73,6 +82,7 @@ export default function GraphQLPage() {
           )}
         </div>
       </aside>
+      )}
 
       {/* Main area */}
       <div className="flex flex-col flex-1 overflow-hidden">

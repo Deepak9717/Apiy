@@ -1,4 +1,4 @@
-import { KeyValuePair, HttpMethod, RequestResponse, AuthConfig } from '@/types/rest'
+import { KeyValuePair, HttpMethod, RequestResponse, AuthConfig, BodyMode, RawBodyType, RAW_BODY_TYPES } from '@/types/rest'
 
 export function resolveAuthHeaders(
   auth: AuthConfig,
@@ -64,6 +64,43 @@ export function parseUrlParams(url: string): KeyValuePair[] {
   }
 }
 
+/**
+ * Turns the Body tab's state into a wire-ready string + matching Content-Type,
+ * covering the modes Postman/Hoppscotch users expect: none, raw (with a
+ * sub-type), form-data (multipart, text fields only), and urlencoded.
+ */
+export function buildRequestBody(
+  mode: BodyMode,
+  rawBody: string,
+  rawType: RawBodyType,
+  formPairs: KeyValuePair[]
+): { body: string | undefined; contentType?: string } {
+  if (mode === 'none') return { body: undefined }
+
+  if (mode === 'raw') {
+    if (!rawBody.trim()) return { body: undefined }
+    const meta = RAW_BODY_TYPES.find((t) => t.value === rawType)
+    return { body: rawBody, contentType: meta?.mime }
+  }
+
+  const active = formPairs.filter((p) => p.enabled && p.key.trim())
+
+  if (mode === 'x-www-form-urlencoded') {
+    if (!active.length) return { body: undefined }
+    const qs = active.map((p) => `${encodeURIComponent(p.key)}=${encodeURIComponent(p.value)}`).join('&')
+    return { body: qs, contentType: 'application/x-www-form-urlencoded' }
+  }
+
+  // form-data — hand-build a multipart body (text fields only, no file upload support)
+  if (!active.length) return { body: undefined }
+  const boundary = `----APIYFormBoundary${generateId().replace(/-/g, '')}`
+  const parts = active.map(
+    (p) => `--${boundary}\r\nContent-Disposition: form-data; name="${p.key}"\r\n\r\n${p.value}\r\n`
+  )
+  const bodyStr = parts.join('') + `--${boundary}--\r\n`
+  return { body: bodyStr, contentType: `multipart/form-data; boundary=${boundary}` }
+}
+
 export function emptyPair(): KeyValuePair {
   return { id: generateId(), key: '', value: '', enabled: true }
 }
@@ -77,19 +114,24 @@ export async function sendRequest(
   url: string,
   headers: KeyValuePair[],
   params: KeyValuePair[],
-  body: string,
+  bodyMode: BodyMode,
+  rawBody: string,
+  rawType: RawBodyType,
+  formPairs: KeyValuePair[],
   signal?: AbortSignal
 ): Promise<RequestResponse> {
   const finalUrl = buildUrlWithParams(url, params)
   const headerObj = headersToObject(headers)
 
-  let parsedBody: unknown = undefined
-  if (body && method !== 'GET' && method !== 'DELETE') {
-    try {
-      parsedBody = JSON.parse(body)
-    } catch {
-      parsedBody = body
-    }
+  const built =
+    method === 'GET' || method === 'DELETE'
+      ? { body: undefined as string | undefined, contentType: undefined as string | undefined }
+      : buildRequestBody(bodyMode, rawBody, rawType, formPairs)
+
+  // Only auto-fill Content-Type if the user hasn't already set one themselves.
+  const hasContentType = Object.keys(headerObj).some((k) => k.toLowerCase() === 'content-type')
+  if (built.contentType && !hasContentType) {
+    headerObj['Content-Type'] = built.contentType
   }
 
   const start = Date.now()
@@ -97,7 +139,7 @@ export async function sendRequest(
   const res = await fetch('/api/proxy', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url: finalUrl, method, headers: headerObj, body: parsedBody }),
+    body: JSON.stringify({ url: finalUrl, method, headers: headerObj, body: built.body }),
     signal,
   })
 

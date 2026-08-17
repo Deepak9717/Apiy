@@ -7,7 +7,7 @@ import { useRef } from 'react'
 import { useResponseStore } from '@/features/rest-client/store/useResponseStore'
 
 export function useSendRequest() {
-  const { method, url, headers, params, body, auth } = useRequestConfigStore()
+  const { method, url, headers, params, body, bodyMode, bodyRawType, bodyForm, auth } = useRequestConfigStore()
   const addHistory = useHistoryStore((s) => s.add)
   const abortRef = useRef<AbortController | null>(null)
 
@@ -18,7 +18,17 @@ export function useSendRequest() {
       abortRef.current?.abort()
       abortRef.current = new AbortController()
       const resolved = resolveAuthHeaders(auth, headers, params)
-      return sendRequest(method, url, resolved.headers, resolved.params, body, abortRef.current.signal)
+      return sendRequest(
+        method,
+        url,
+        resolved.headers,
+        resolved.params,
+        bodyMode,
+        body,
+        bodyRawType,
+        bodyForm,
+        abortRef.current.signal
+      )
     },
     onMutate: () => {
       setPending(true)

@@ -36,6 +36,24 @@ export interface HistoryItem {
 export type RequestTab = 'params' | 'headers' | 'body' | 'auth'
 export type ResponseTab = 'body' | 'headers'
 
+export type BodyMode = 'none' | 'raw' | 'form-data' | 'x-www-form-urlencoded'
+export type RawBodyType = 'json' | 'text' | 'html' | 'xml' | 'javascript'
+
+export const BODY_MODES: { value: BodyMode; label: string }[] = [
+  { value: 'none', label: 'none' },
+  { value: 'raw', label: 'raw' },
+  { value: 'form-data', label: 'form-data' },
+  { value: 'x-www-form-urlencoded', label: 'x-www-form-urlencoded' },
+]
+
+export const RAW_BODY_TYPES: { value: RawBodyType; label: string; mime: string; placeholder: string }[] = [
+  { value: 'json', label: 'JSON', mime: 'application/json', placeholder: '{\n  "key": "value"\n}' },
+  { value: 'text', label: 'Text', mime: 'text/plain', placeholder: 'Plain text body…' },
+  { value: 'html', label: 'HTML', mime: 'text/html', placeholder: '<!DOCTYPE html>\n<html>\n  ...\n</html>' },
+  { value: 'xml', label: 'XML', mime: 'application/xml', placeholder: '<?xml version="1.0"?>\n<root>\n  ...\n</root>' },
+  { value: 'javascript', label: 'JavaScript', mime: 'application/javascript', placeholder: '// JS payload…' },
+]
+
 export type AuthType = 'none' | 'bearer' | 'basic' | 'apikey'
 
 export interface AuthConfig {

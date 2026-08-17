@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRequestConfigStore } from '@/features/rest-client/store/useRequestConfigStore'
-import { RequestTab } from '@/types/rest'
+import { RequestTab, BODY_MODES, RAW_BODY_TYPES } from '@/types/rest'
 import { useSendRequest } from '@/features/rest-client/hooks/useSendRequest'
 import KeyValueEditor from './KeyValueEditor'
 import UrlBar from './UrlBar'
@@ -16,8 +16,10 @@ const TABS: { key: RequestTab; label: string }[] = [
 ]
 
 export default function RequestPanel() {
-  const { headers, params, body, auth, activeTab, setHeaders, setParams, setBody, setActiveTab } =
-    useRequestConfigStore()
+  const {
+    headers, params, body, bodyMode, bodyRawType, bodyForm, auth, activeTab,
+    setHeaders, setParams, setBody, setBodyMode, setBodyRawType, setBodyForm, setActiveTab,
+  } = useRequestConfigStore()
 
   const { send, cancel, isPending } = useSendRequest()
 
@@ -94,15 +96,59 @@ export default function RequestPanel() {
               />
             )}
             {activeTab === 'body' && (
-              <div className="flex flex-col gap-2 h-full">
-                <span className="text-xs text-zinc-500 dark:text-zinc-700">Raw JSON body</span>
-                <textarea
-                  value={body}
-                  onChange={(e) => setBody(e.target.value)}
-                  placeholder={'{\n  "key": "value"\n}'}
-                  spellCheck={false}
-                  className="flex-1 min-h-52 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-xl p-3 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-800 focus:outline-none focus:border-violet-400 dark:focus:border-violet-600/50 font-mono resize-none transition-colors"
-                />
+              <div className="flex flex-col gap-3 h-full">
+                {/* Body mode selector */}
+                <div className="flex items-center gap-4 flex-wrap">
+                  {BODY_MODES.map((m) => (
+                    <label
+                      key={m.value}
+                      className="flex items-center gap-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 cursor-pointer select-none"
+                    >
+                      <input
+                        type="radio"
+                        name="body-mode"
+                        checked={bodyMode === m.value}
+                        onChange={() => setBodyMode(m.value)}
+                        className="w-3.5 h-3.5 accent-violet-600 cursor-pointer"
+                      />
+                      {m.label}
+                    </label>
+                  ))}
+
+                  {/* Raw sub-type dropdown */}
+                  {bodyMode === 'raw' && (
+                    <select
+                      value={bodyRawType}
+                      onChange={(e) => setBodyRawType(e.target.value as typeof bodyRawType)}
+                      className="ml-auto text-xs bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-lg px-2 py-1 text-zinc-700 dark:text-zinc-300 focus:outline-none focus:border-violet-400 dark:focus:border-violet-600/50 cursor-pointer"
+                    >
+                      {RAW_BODY_TYPES.map((t) => (
+                        <option key={t.value} value={t.value}>{t.label}</option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+
+                {/* Mode-specific editor */}
+                {bodyMode === 'none' && (
+                  <div className="flex-1 flex items-center justify-center">
+                    <p className="text-xs text-zinc-400 dark:text-zinc-700">This request does not have a body</p>
+                  </div>
+                )}
+
+                {bodyMode === 'raw' && (
+                  <textarea
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
+                    placeholder={RAW_BODY_TYPES.find((t) => t.value === bodyRawType)?.placeholder}
+                    spellCheck={false}
+                    className="flex-1 min-h-52 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-xl p-3 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-800 focus:outline-none focus:border-violet-400 dark:focus:border-violet-600/50 font-mono resize-none transition-colors"
+                  />
+                )}
+
+                {(bodyMode === 'form-data' || bodyMode === 'x-www-form-urlencoded') && (
+                  <KeyValueEditor pairs={bodyForm} onChange={setBodyForm} keyPlaceholder="key" valuePlaceholder="value" />
+                )}
               </div>
             )}
             {activeTab === 'auth' && <AuthEditor />}

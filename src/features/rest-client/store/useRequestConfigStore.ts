@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-import { HttpMethod, KeyValuePair, RequestTab, AuthConfig, DEFAULT_AUTH } from '@/types/rest'
+import { HttpMethod, KeyValuePair, RequestTab, AuthConfig, DEFAULT_AUTH, BodyMode, RawBodyType } from '@/types/rest'
 import { emptyPair, generateId } from '@/features/rest-client/lib/request'
 
 interface RequestConfigStore {
@@ -9,6 +9,9 @@ interface RequestConfigStore {
   headers: KeyValuePair[]
   params: KeyValuePair[]
   body: string
+  bodyMode: BodyMode
+  bodyRawType: RawBodyType
+  bodyForm: KeyValuePair[]
   auth: AuthConfig
   activeTab: RequestTab
 
@@ -17,6 +20,9 @@ interface RequestConfigStore {
   setHeaders: (headers: KeyValuePair[]) => void
   setParams: (params: KeyValuePair[]) => void
   setBody: (body: string) => void
+  setBodyMode: (mode: BodyMode) => void
+  setBodyRawType: (type: RawBodyType) => void
+  setBodyForm: (pairs: KeyValuePair[]) => void
   setAuth: (auth: Partial<AuthConfig>) => void
   setActiveTab: (tab: RequestTab) => void
   loadRequest: (partial: Partial<{ method: HttpMethod; url: string }>) => void
@@ -34,6 +40,9 @@ export const useRequestConfigStore = create<RequestConfigStore>()(
     headers: defaultHeaders,
     params: [emptyPair()],
     body: '',
+    bodyMode: 'raw',
+    bodyRawType: 'json',
+    bodyForm: [emptyPair()],
     auth: DEFAULT_AUTH,
     activeTab: 'params',
 
@@ -42,6 +51,9 @@ export const useRequestConfigStore = create<RequestConfigStore>()(
     setHeaders: (headers) => set((s) => { s.headers = headers }),
     setParams: (params) => set((s) => { s.params = params }),
     setBody: (body) => set((s) => { s.body = body }),
+    setBodyMode: (mode) => set((s) => { s.bodyMode = mode }),
+    setBodyRawType: (type) => set((s) => { s.bodyRawType = type }),
+    setBodyForm: (pairs) => set((s) => { s.bodyForm = pairs }),
     setAuth: (auth) => set((s) => { Object.assign(s.auth, auth) }),
     setActiveTab: (tab) => set((s) => { s.activeTab = tab }),
 
@@ -58,6 +70,9 @@ export const useRequestConfigStore = create<RequestConfigStore>()(
         s.headers = defaultHeaders
         s.params = [emptyPair()]
         s.body = ''
+        s.bodyMode = 'raw'
+        s.bodyRawType = 'json'
+        s.bodyForm = [emptyPair()]
         s.auth = { ...DEFAULT_AUTH }
         s.activeTab = 'params'
       }),

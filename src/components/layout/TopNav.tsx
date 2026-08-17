@@ -19,6 +19,7 @@ export default function TopNav() {
   const { theme, toggleTheme } = useUIStore()
   const { data: session, status } = useSession()
   const [menuOpen, setMenuOpen] = useState(false)
+  const isAuthPage = pathname === '/login' || pathname === '/signup'
 
   return (
     <header className="flex items-center gap-4 px-5 h-14 border-b border-zinc-200/50 dark:border-zinc-800/40 shrink-0 glass-header sticky top-0 z-50">
@@ -33,41 +34,42 @@ export default function TopNav() {
           <span className="font-extrabold text-zinc-800 dark:text-zinc-200 text-sm tracking-wide bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-zinc-100 dark:to-zinc-300 bg-clip-text text-transparent">
             APIY
           </span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded-md font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 border border-zinc-200/50 dark:border-zinc-700/50">
-            v1.0
-          </span>
         </Link>
       </div>
 
-      <div className="h-5 w-px bg-zinc-200 dark:bg-zinc-800" />
+      {!isAuthPage && (
+        <>
+          <div className="h-5 w-px bg-zinc-200 dark:bg-zinc-800" />
 
-      {/* Mode tabs */}
-      <nav className="flex items-center gap-1.5">
-        {TABS.map((tab) => {
-          const isActive = pathname === tab.href
-          const Icon = tab.icon
-          return (
-            <Link key={tab.href} href={tab.href}>
-              <motion.div
-                whileHover={{ y: -0.5 }}
-                whileTap={{ scale: 0.98 }}
-                className={`relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-colors cursor-pointer select-none ${isActive ? tab.activeColor : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'
-                  }`}
-              >
-                {isActive && (
+          {/* Mode tabs */}
+          <nav className="flex items-center gap-1.5">
+            {TABS.map((tab) => {
+              const isActive = pathname === tab.href
+              const Icon = tab.icon
+              return (
+                <Link key={tab.href} href={tab.href}>
                   <motion.div
-                    layoutId="nav-active-bg"
-                    className="absolute inset-0 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/40 dark:border-zinc-800/40 rounded-xl shadow-sm"
-                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-                  />
-                )}
-                <Icon className="relative z-10 w-3.5 h-3.5 shrink-0" />
-                <span className="relative z-10">{tab.label}</span>
-              </motion.div>
-            </Link>
-          )
-        })}
-      </nav>
+                    whileHover={{ y: -0.5 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-colors cursor-pointer select-none ${isActive ? tab.activeColor : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'
+                      }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="nav-active-bg"
+                        className="absolute inset-0 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/40 dark:border-zinc-800/40 rounded-xl shadow-sm"
+                        transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                      />
+                    )}
+                    <Icon className="relative z-10 w-3.5 h-3.5 shrink-0" />
+                    <span className="relative z-10">{tab.label}</span>
+                  </motion.div>
+                </Link>
+              )
+            })}
+          </nav>
+        </>
+      )}
 
       {/* Right: theme toggle + user menu */}
       <div className="ml-auto flex items-center gap-3">
@@ -86,18 +88,18 @@ export default function TopNav() {
           )}
         </motion.button>
 
-        <div className="h-5 w-px bg-zinc-200 dark:bg-zinc-800" />
-        {status === 'loading' && (
+        {!isAuthPage && <div className="h-5 w-px bg-zinc-200 dark:bg-zinc-800" />}
+        {status === 'loading' && !isAuthPage && (
           <div className="w-4 h-4 border-2 border-zinc-200 dark:border-zinc-700 border-t-violet-600 rounded-full animate-spin" />
         )}
 
-        {status === 'unauthenticated' && (
+        {!isAuthPage && status === 'unauthenticated' && (
           <div className="flex items-center gap-2">
             <Link href="/login">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors px-3 py-1.5 cursor-pointer"
+                className="text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors px-4 py-2 cursor-pointer"
               >
                 Sign in
               </motion.button>
@@ -106,7 +108,7 @@ export default function TopNav() {
               <motion.button
                 whileHover={{ scale: 1.02, y: -0.5 }}
                 whileTap={{ scale: 0.98 }}
-                className="text-xs bg-gradient-to-r from-violet-600 to-fuchsia-500 hover:opacity-95 text-white px-4 py-1.8 rounded-xl font-semibold shadow-md shadow-violet-600/10 transition-all cursor-pointer"
+                className="text-xs bg-gradient-to-r from-violet-600 to-fuchsia-500 hover:opacity-95 text-white px-5 py-2 rounded-lg font-semibold shadow-md shadow-violet-600/10 transition-all cursor-pointer"
               >
                 Sign up
               </motion.button>
@@ -114,7 +116,7 @@ export default function TopNav() {
           </div>
         )}
 
-        {status === 'authenticated' && session?.user && (
+        {!isAuthPage && status === 'authenticated' && session?.user && (
           <div className="relative">
             <motion.button
               whileHover={{ scale: 1.01 }}

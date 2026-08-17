@@ -1,11 +1,15 @@
 services:
   app:
     build: .
+    command: npm run dev
+
+    volumes:
+      - .:/app:delegated
+      - /app/node_modules
+
     ports:
       - "3000:3000"
 
-    volumes:
-      - .:/app
-      - /app/node_modules
-
-    command: npm run dev
+    environment:
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
