@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useGraphQLStore } from '@/features/graphql-client/store/useGraphQLStore'
 import { useGraphQL } from '@/features/graphql-client/hooks/useGraphQL'
+import { LuRefreshCcw } from "react-icons/lu";
 
 interface SchemaType {
   name: string
@@ -43,7 +44,7 @@ export default function SchemaExplorer() {
               <span className="w-2.5 h-2.5 border border-zinc-300 dark:border-zinc-600 border-t-fuchsia-500 rounded-full animate-spin" />
               Loading
             </span>
-          ) : '↻ Refresh'}
+          ) : <LuRefreshCcw title='Refresh' className="w-4 h-4 text-zinc-400 dark:text-zinc-600 hover:text-fuchsia-500 dark:hover:text-fuchsia-400 transition-colors cursor-pointer"/>}
         </motion.button>
       </div>
 
@@ -73,7 +74,7 @@ export default function SchemaExplorer() {
               <div key={type.name} className="border-b border-zinc-100 dark:border-zinc-800/50">
                 <button
                   onClick={() => setExpanded(expanded === type.name ? null : type.name)}
-                  className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors text-left"
+                  className="w-full cursor-pointer flex items-center justify-between px-4 py-2.5 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors text-left"
                 >
                   <span className="text-xs font-mono text-fuchsia-500 dark:text-fuchsia-400/80">{type.name}</span>
                   <span className="text-zinc-400 dark:text-zinc-700 text-xs">{expanded === type.name ? '▲' : '▼'}</span>

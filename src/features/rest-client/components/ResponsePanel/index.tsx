@@ -133,7 +133,7 @@ export default function ResponsePanel() {
                   <button
                     key={tab}
                     onClick={() => handleTabClick(tab)}
-                    className={`relative px-3 py-1 text-xs rounded-lg capitalize transition-colors ${
+                    className={`relative px-3 py-1 text-xs rounded-lg capitalize cursor-pointer transition-colors ${
                       activeTab === tab
                         ? 'text-zinc-800 dark:text-zinc-200'
                         : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-600 dark:hover:text-zinc-400'
@@ -161,7 +161,7 @@ export default function ResponsePanel() {
                 {showPreviewTab && (
                   <button
                     onClick={() => handleTabClick('preview')}
-                    className={`relative px-3 py-1 text-xs rounded-lg capitalize transition-colors ${
+                    className={`relative px-3 py-1 text-xs rounded-lg capitalize cursor-pointer transition-colors ${
                       activeTab === 'preview'
                         ? 'text-zinc-800 dark:text-zinc-200'
                         : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-600 dark:hover:text-zinc-400'

@@ -27,7 +27,7 @@ export default function AuthEditor() {
           <button
             key={t.value}
             onClick={() => setAuth({ type: t.value })}
-            className={`flex flex-col gap-0.5 p-3 rounded-xl border text-left transition-all ${
+            className={`flex flex-col gap-0.5 p-3 rounded-xl border text-left cursor-pointer transition-all ${
               auth.type === t.value
                 ? 'border-violet-600/50 bg-violet-600/5 text-violet-400'
                 : 'border-zinc-200 dark:border-zinc-700/60 hover:border-zinc-300 dark:hover:border-zinc-600 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'
@@ -167,7 +167,7 @@ export default function AuthEditor() {
                   <button
                     key={loc}
                     onClick={() => setAuth({ apiKeyIn: loc })}
-                    className={`flex-1 py-2 rounded-xl border text-sm capitalize transition-all ${
+                    className={`flex-1 py-2 rounded-xl border text-sm capitalize cursor-pointer transition-all ${
                       auth.apiKeyIn === loc
                         ? 'border-violet-600/50 bg-violet-600/5 text-violet-400'
                         : 'border-zinc-200 dark:border-zinc-700/60 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'

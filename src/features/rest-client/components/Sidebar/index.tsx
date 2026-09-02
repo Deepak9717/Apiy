@@ -7,6 +7,7 @@ import { useRequestConfigStore } from '@/features/rest-client/store/useRequestCo
 import { useUIStore } from '@/store/useUIStore'
 import { HttpMethod } from '@/types/rest'
 import { getStatusDot, timeAgo } from '@/features/rest-client/lib/request'
+import { FaClock } from 'react-icons/fa'
 
 const BADGE_COLORS: Record<HttpMethod, string> = {
   GET: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/50',
@@ -24,7 +25,7 @@ export default function Sidebar() {
   if (!sidebarOpen) {
     // Collapsed rail — always visible so the sidebar can be reopened.
     return (
-      <div className="flex flex-col items-center py-3.5 border-r border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-50/50 dark:bg-zinc-950/20 shrink-0 h-full">
+      <div className="flex px-1 flex-col items-center py-3.5 border-r border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-50/50 dark:bg-zinc-950/20 shrink-0 h-full">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -47,12 +48,12 @@ export default function Sidebar() {
       className="flex flex-col border-r border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-50/50 dark:bg-zinc-950/20 overflow-hidden shrink-0 h-full"
     >
       {/* History header */}
-      <div className="flex items-center justify-between px-4 py-3.5 border-b border-zinc-200/50 dark:border-zinc-800/40 bg-white/40 dark:bg-zinc-950/40">
+      <div className="flex items-center justify-between px-2 py-2.5 border-b border-zinc-200/50 dark:border-zinc-800/40 bg-white/40 dark:bg-zinc-950/40">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={toggleSidebar}
-          className="p-1.5 rounded-full hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 cursor-pointer transition-colors"
+          className="p-1 rounded-full hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 cursor-pointer transition-colors"
           title="Hide sidebar"
         >
           <FiMenu className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
@@ -78,7 +79,7 @@ export default function Sidebar() {
             animate={{ opacity: 1 }}
             className="px-4 py-12 text-center"
           >
-            <div className="text-2xl mb-2 opacity-20">🕒</div>
+            <div className="text-2xl mb-2 opacity-20 flex items-center justify-center"><FaClock className='w-5 h-5 text-center'/></div>
             <p className="text-xs font-medium text-zinc-400 dark:text-zinc-700">No requests yet</p>
           </motion.div>
         ) : (

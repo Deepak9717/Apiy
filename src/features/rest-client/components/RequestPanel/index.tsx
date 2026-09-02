@@ -44,7 +44,7 @@ export default function RequestPanel() {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`relative px-4 py-2.5 text-sm transition-colors ${
+              className={`relative cursor-pointer px-4 py-2.5 text-sm transition-colors ${
                 activeTab === tab.key
                   ? 'text-violet-600 dark:text-violet-400'
                   : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'

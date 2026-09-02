@@ -44,7 +44,7 @@ export default function GraphQLEditor() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`relative px-4 py-2.5 text-sm transition-colors ${
+            className={`relative px-4 py-2.5 cursor-pointer text-sm transition-colors ${
               tab === t.key
                 ? 'text-fuchsia-500 dark:text-fuchsia-400'
                 : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'

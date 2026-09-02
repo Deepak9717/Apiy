@@ -45,7 +45,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         });
         if (!res.ok) {
           const data = await res.json();
-          setError(data.message || 'Signup failed');
+          setError(data.error || data.message || 'Signup failed. Please try again.');
         } else {
           // after successful signup, automatically sign in
           const result = await signIn('credentials', {
@@ -129,7 +129,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
       {error && <div className="error-message">{error}</div>}
 
-      <button type="submit" className="auth-button" disabled={busy}>
+      <button type="submit" className="auth-button cursor-pointer" disabled={busy}>
         {loading && <span className="auth-spinner" aria-hidden="true" />}
         {loading ? 'Please wait…' : mode === 'login' ? 'Sign In' : 'Create Account'}
         <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">

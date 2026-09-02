@@ -91,7 +91,7 @@ export default function GraphQLResponse() {
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`relative px-3 py-1 text-xs rounded-lg capitalize transition-colors ${
+              className={`relative px-3 py-1 text-xs rounded-lg capitalize transition-colors cursor-pointer ${
                 tab === t
                   ? 'text-zinc-800 dark:text-zinc-200'
                   : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-600 dark:hover:text-zinc-400'

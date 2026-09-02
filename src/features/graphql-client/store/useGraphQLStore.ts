@@ -37,6 +37,7 @@ interface GraphQLStore {
   setSchema: (s: string | null) => void
   setSchemaLoading: (v: boolean) => void
   addHistory: (item: GraphQLHistoryItem) => void
+  removeHistory: (id: string) => void
   clearHistory: () => void
 }
 
@@ -66,6 +67,8 @@ export const useGraphQLStore = create<GraphQLStore>()(
         }),
 
       clearHistory: () => set((s) => { s.history = [] }),
+
+      removeHistory: (id) => set((s) => { s.history = s.history.filter((h) => h.id !== id) }),
     })),
     {
       name: 'api-forge-graphql',
