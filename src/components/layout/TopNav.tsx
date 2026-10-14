@@ -26,11 +26,6 @@ export default function TopNav() {
       {/* Logo + sidebar toggle */}
       <div className="flex items-center gap-3">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-6 h-6 bg-gradient-to-br from-violet-600 to-fuchsia-500 rounded-xl flex items-center justify-center shadow-md shadow-violet-600/20 group-hover:scale-105 transition-transform">
-            <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M13 2L3 14h9v8l10-12h-9l3-8z" />
-            </svg>
-          </div>
           <span className="font-extrabold text-zinc-800 dark:text-zinc-200 text-sm tracking-wide bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-zinc-100 dark:to-zinc-300 bg-clip-text text-transparent">
             APIY
           </span>

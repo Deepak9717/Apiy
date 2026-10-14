@@ -1,23 +1,28 @@
+/**
+ * middleware.ts
+ *
+ * Runs on the Edge before every request.
+ * withAuth checks for a valid JWT session token.
+ * If none → redirect to /login.
+ *
+ * The matcher excludes:
+ *  - /login, /signup         public auth pages
+ *  - /api/auth/*             NextAuth's own endpoints (must stay public)
+ *  - /_next/*, /favicon.ico  Next.js internals
+ */
 import { withAuth } from 'next-auth/middleware'
-import { NextResponse } from 'next/server'
 
-export default withAuth(
-  function middleware(req) {
-    return NextResponse.next()
+export default withAuth({
+  callbacks: {
+    authorized: ({ token }) => !!token,
   },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
-    },
-    pages: {
-      signIn: '/login',
-    },
-  }
-)
+  pages: {
+    signIn: '/login',
+  },
+})
 
-// Protect all routes except auth pages and API routes
 export const config = {
   matcher: [
-    '/((?!login|signup|api/auth|_next/static|_next/image|favicon.ico).*)',
+    '/((?!login|signup|api/auth|_next/static|_next/image|favicon.ico|icon.svg).*)',
   ],
 }
