@@ -29,7 +29,7 @@ export default function GraphQLUrlBar() {
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="https://api.example.com/graphql"
-          className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-xl px-4 py-2 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-700 focus:outline-none focus:border-fuchsia-400 dark:focus:border-fuchsia-500/50 font-mono transition-colors"
+          className="w-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-xl px-4 py-2 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-700 focus:outline-none focus:border-fuchsia-400 dark:focus:border-fuchsia-500/50 font-mono transition-colors"
         />
         {url && !valid && (
           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-red-500/70">invalid url</span>

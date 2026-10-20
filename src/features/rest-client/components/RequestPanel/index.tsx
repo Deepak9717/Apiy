@@ -28,7 +28,7 @@ export default function RequestPanel() {
   const authActive = auth.type !== 'none'
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
+    <div className="flex flex-col h-full bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
       <UrlBar onSend={() => send()} onCancel={cancel} isPending={isPending} />
 
       {/* Tabs */}
@@ -142,7 +142,7 @@ export default function RequestPanel() {
                     onChange={(e) => setBody(e.target.value)}
                     placeholder={RAW_BODY_TYPES.find((t) => t.value === bodyRawType)?.placeholder}
                     spellCheck={false}
-                    className="flex-1 min-h-52 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-xl p-3 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-800 focus:outline-none focus:border-violet-400 dark:focus:border-violet-600/50 font-mono resize-none transition-colors"
+                    className="flex-1 min-h-52 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/60 rounded-xl p-3 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-800 focus:outline-none focus:border-violet-400 dark:focus:border-violet-600/50 font-mono resize-none transition-colors"
                   />
                 )}
 

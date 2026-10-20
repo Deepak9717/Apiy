@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import { FiMenu } from 'react-icons/fi'
 import { useHistoryStore } from '@/features/rest-client/store/useHistoryStore'
 import { useRequestConfigStore } from '@/features/rest-client/store/useRequestConfigStore'
@@ -25,7 +26,7 @@ export default function Sidebar() {
   if (!sidebarOpen) {
     // Collapsed rail — always visible so the sidebar can be reopened.
     return (
-      <div className="flex px-1 flex-col items-center py-3.5 border-r border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-50/50 dark:bg-zinc-950/20 shrink-0 h-full">
+      <div className="flex px-1 flex-col items-center py-3.5 border-r border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-100/70 dark:bg-zinc-950/20 shrink-0 h-full">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -45,10 +46,10 @@ export default function Sidebar() {
       animate={{ width: 240, opacity: 1 }}
       exit={{ width: 0, opacity: 0 }}
       transition={{ type: 'spring', stiffness: 450, damping: 35 }}
-      className="flex flex-col border-r border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-50/50 dark:bg-zinc-950/20 overflow-hidden shrink-0 h-full"
+      className="flex flex-col border-r border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-100/70 dark:bg-zinc-950/20 overflow-hidden shrink-0 h-full"
     >
       {/* History header */}
-      <div className="flex items-center justify-between px-2 py-2.5 border-b border-zinc-200/50 dark:border-zinc-800/40 bg-white/40 dark:bg-zinc-950/40">
+      <div className="flex items-center justify-between px-2 py-2.5 border-b border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-100/80 dark:bg-zinc-950/40">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -143,10 +144,8 @@ export default function Sidebar() {
       </div>
 
       {/* Footer */}
-      <div className="px-4 py-3 border-t border-zinc-200/50 dark:border-zinc-800/40 bg-white/20 dark:bg-zinc-950/20">
-        <p className="text-[10px] font-bold text-zinc-400 dark:text-zinc-700 tracking-wider">
-          APIY
-        </p>
+      <div className="px-4 py-3 border-t border-zinc-200/50 dark:border-zinc-800/40 bg-zinc-100/50 dark:bg-zinc-950/20">
+        <Image src="/logo.png" alt="APIY" width={18} height={18} className="size-[18px] rounded-md" />
       </div>
     </motion.aside>
   )

@@ -15,14 +15,12 @@
  */
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 
 type Mode = 'login' | 'signup'
 
 export default function AuthForm({ mode }: { mode: Mode }) {
-  const router = useRouter()
   const [name, setName]         = useState('')
   const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')
@@ -41,8 +39,11 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     try {
       if (isLogin) {
         const res = await signIn('credentials', { redirect: false, email, password })
-        if (res?.error) setError(res.error)
-        else router.push('/')
+        if (res?.error) {
+          setError(res.error)
+        } else {
+          window.location.href = '/'
+        }
       } else {
         const res = await fetch('/api/auth/signup', {
           method: 'POST',
@@ -54,8 +55,11 @@ export default function AuthForm({ mode }: { mode: Mode }) {
 
         // Auto sign-in after successful registration
         const signin = await signIn('credentials', { redirect: false, email, password })
-        if (signin?.error) setError(signin.error)
-        else router.push('/')
+        if (signin?.error) {
+          setError(signin.error)
+        } else {
+          window.location.href = '/'
+        }
       }
     } catch {
       setError('Something went wrong. Please try again.')
@@ -66,7 +70,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
 
   const inputCls = `
     w-full px-4 py-2.5 rounded-xl text-sm
-    bg-white/60 dark:bg-white/5
+    bg-zinc-50/80 dark:bg-white/5
     border border-zinc-200 dark:border-white/10
     text-zinc-900 dark:text-zinc-100
     placeholder:text-zinc-400 dark:placeholder:text-zinc-600

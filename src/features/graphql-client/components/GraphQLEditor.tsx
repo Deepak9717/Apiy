@@ -31,7 +31,7 @@ const PLACEHOLDER_HEADERS = `{
 }`
 
 const editorCls =
-  'flex-1 w-full min-h-48 bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-700/40 rounded-xl p-3 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-800 focus:outline-none focus:border-fuchsia-400 dark:focus:border-fuchsia-500/40 font-mono resize-none transition-colors leading-relaxed'
+  'flex-1 w-full min-h-48 bg-zinc-100 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-700/40 rounded-xl p-3 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-800 focus:outline-none focus:border-fuchsia-400 dark:focus:border-fuchsia-500/40 font-mono resize-none transition-colors leading-relaxed'
 
 export default function GraphQLEditor() {
   const [tab, setTab] = useState<Tab>('query')

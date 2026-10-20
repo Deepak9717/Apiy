@@ -46,13 +46,13 @@ select option {
   color: #e4e4e7;
 }
 html:not(.dark) select option {
-  background: #ffffff;
+  background: #fafafa;
   color: #18181b;
 }
 
 /* Glassmorphism panel styles */
 .glass-panel {
-  background-color: rgba(255, 255, 255, 0.45);
+  background-color: rgba(244, 244, 245, 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -61,12 +61,20 @@ html:not(.dark) select option {
 }
 
 .glass-header {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(244, 244, 245, 0.82);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 .dark .glass-header {
   background-color: rgba(9, 9, 11, 0.6);
+}
+
+.auth-dot-grid {
+  background-image: radial-gradient(circle, rgba(63, 63, 70, 0.14) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.dark .auth-dot-grid {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
 }
 
 /* CodeMirror theme overrides to blend nicely */

@@ -16,7 +16,6 @@ if (!MONGODB_URI.startsWith('mongodb://') && !MONGODB_URI.startsWith('mongodb+sr
 
 // Cache connection across hot reloads in development
 declare global {
-  // eslint-disable-next-line no-var
   var mongooseCache: { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null }
 }
 

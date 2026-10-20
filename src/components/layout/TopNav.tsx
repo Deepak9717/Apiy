@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useUIStore } from '@/store/useUIStore'
@@ -22,10 +23,22 @@ export default function TopNav() {
   const isAuthPage = pathname === '/login' || pathname === '/signup'
 
   return (
-    <header className="flex items-center gap-4 px-5 h-14 border-b border-zinc-200/50 dark:border-zinc-800/40 shrink-0 glass-header sticky top-0 z-50">
+    <header className={`flex items-center gap-4 px-5 h-14 border-b shrink-0 sticky top-0 z-50 ${
+      isAuthPage
+        ? 'bg-zinc-100/80 dark:bg-[#0e0e14]/80 border-transparent backdrop-blur-sm'
+        : 'border-zinc-200/50 dark:border-zinc-800/40 glass-header'
+    }`}>
       {/* Logo + sidebar toggle */}
       <div className="flex items-center gap-3">
         <Link href="/" className="flex items-center gap-2 group">
+          <Image
+            src="/logo.png"
+            alt="APIY"
+            width={28}
+            height={28}
+            className="size-7 rounded-lg"
+            priority
+          />
           <span className="font-extrabold text-zinc-800 dark:text-zinc-200 text-sm tracking-wide bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-zinc-100 dark:to-zinc-300 bg-clip-text text-transparent">
             APIY
           </span>
@@ -142,7 +155,7 @@ export default function TopNav() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 6, scale: 0.98 }}
                     transition={{ duration: 0.15, ease: 'easeOut' }}
-                    className="absolute right-0 top-full mt-2 z-20 w-52 bg-white dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-800/80 rounded-xl shadow-lg shadow-zinc-200/20 dark:shadow-none overflow-hidden"
+                    className="absolute right-0 top-full mt-2 z-20 w-52 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-800/80 rounded-xl shadow-lg shadow-zinc-200/20 dark:shadow-none overflow-hidden"
                   >
                     {/* User info */}
                     <div className="px-4 py-3 bg-zinc-50/50 dark:bg-zinc-900/20 border-b border-zinc-200/50 dark:border-zinc-800/50">
@@ -158,7 +171,7 @@ export default function TopNav() {
                     <button
                       onClick={() => {
                         setMenuOpen(false)
-                        signOut({ callbackUrl: '/login' })
+                        signOut({ callbackUrl: `${window.location.origin}/login` })
                       }}
                       className="w-full text-left px-4 py-2.5 text-xs font-semibold text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/5 transition-colors cursor-pointer"
                     >

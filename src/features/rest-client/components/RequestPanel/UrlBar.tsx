@@ -23,7 +23,7 @@ export default function UrlBar({ onSend, onCancel, isPending }: Props) {
   }
 
   return (
-    <div className="flex gap-2.5 p-4 bg-white/10 dark:bg-zinc-900/40 backdrop-blur-lg border border-white/20 dark:border-zinc-800/30 shadow-sm">
+    <div className="flex gap-2.5 p-4 bg-zinc-100/70 dark:bg-zinc-900/40 backdrop-blur-lg border border-zinc-200/70 dark:border-zinc-800/30 shadow-sm">
       {/* Method dropdown */}
       <MethodDropdown value={method} onChange={(m) => setMethod(m)} />
 
@@ -35,7 +35,7 @@ export default function UrlBar({ onSend, onCancel, isPending }: Props) {
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="https://api.example.com/endpoint"
-          className="w-full bg-white/5 dark:bg-zinc-800/60 border border-white/20 dark:border-zinc-700/40 rounded-xl px-4 py-2.5 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-400 dark:focus:ring-violet-600/50 transition-shadow"
+          className="w-full bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/40 rounded-xl px-4 py-2.5 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-400 dark:focus:ring-violet-600/50 transition-shadow"
         />
         {url && !valid && (
           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-red-500/80">

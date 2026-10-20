@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' })
 export const metadata: Metadata = {
   title: 'APIY - API Testing Tool',
   description: 'REST and GraphQL API client — no CORS headaches',
-  icons: { icon: '/icon.svg' },
+  icons: { icon: '/logo.png' },
 }
 
 // Blocking script: reads theme from localStorage before first paint.

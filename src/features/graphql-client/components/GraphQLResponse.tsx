@@ -25,7 +25,7 @@ export default function GraphQLResponse() {
 
   if (isPending) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-4 bg-white dark:bg-zinc-950">
+      <div className="flex flex-col items-center justify-center h-full gap-4 bg-zinc-50 dark:bg-zinc-950">
         <div className="relative w-10 h-10">
           <motion.div
             className="absolute inset-0 border-2 border-fuchsia-500/20 rounded-full"
@@ -44,7 +44,7 @@ export default function GraphQLResponse() {
       <motion.div
         initial={{ opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center h-full gap-3 p-8 bg-white dark:bg-zinc-950"
+        className="flex flex-col items-center justify-center h-full gap-3 p-8 bg-zinc-50 dark:bg-zinc-950"
       >
         <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-400">✕</div>
         <p className="text-sm text-red-500 dark:text-red-400 font-medium">Request Failed</p>
@@ -55,7 +55,7 @@ export default function GraphQLResponse() {
 
   if (!response) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-2 select-none bg-white dark:bg-zinc-950">
+      <div className="flex flex-col items-center justify-center h-full gap-2 select-none bg-zinc-50 dark:bg-zinc-950">
         <div className="text-4xl opacity-10">◈</div>
         <p className="text-sm text-zinc-400 dark:text-zinc-700">No response yet</p>
         <p className="text-xs text-zinc-400 dark:text-zinc-800">Enter a URL and click Run</p>
@@ -70,7 +70,7 @@ export default function GraphQLResponse() {
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col h-full bg-white dark:bg-zinc-950"
+      className="flex flex-col h-full bg-zinc-50 dark:bg-zinc-950"
     >
       {/* Status bar */}
       <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 flex-wrap gap-y-1.5">

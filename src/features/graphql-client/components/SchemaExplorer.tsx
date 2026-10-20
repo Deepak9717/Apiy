@@ -65,7 +65,7 @@ export default function SchemaExplorer() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search types…"
-              className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/40 rounded-lg px-2.5 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 dark:placeholder:text-zinc-700 focus:outline-none focus:border-fuchsia-400 dark:focus:border-fuchsia-500/40 font-mono"
+              className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/40 rounded-lg px-2.5 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 dark:placeholder:text-zinc-700 focus:outline-none focus:border-fuchsia-400 dark:focus:border-fuchsia-500/40 font-mono"
             />
           </div>
 

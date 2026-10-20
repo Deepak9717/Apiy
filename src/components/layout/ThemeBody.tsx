@@ -21,7 +21,7 @@ export default function ThemeBody({ children, fontVariable }: Props) {
   }, [theme])
 
   return (
-    <body className={`${fontVariable ?? ''} font-sans antialiased bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-200`}>
+    <body className={`${fontVariable ?? ''} font-sans antialiased bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-200`}>
       {children}
     </body>
   )

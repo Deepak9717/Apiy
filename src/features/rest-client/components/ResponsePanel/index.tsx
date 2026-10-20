@@ -19,7 +19,7 @@ function HtmlPreview({ html }: { html: string }) {
     <iframe
       srcDoc={html}
       sandbox="allow-scripts allow-same-origin"
-      className="w-full h-full border-0 rounded-xl bg-white"
+      className="w-full h-full border-0 rounded-xl bg-zinc-50"
       title="Response Preview"
     />
   )
@@ -28,7 +28,7 @@ function HtmlPreview({ html }: { html: string }) {
 export default function ResponsePanel() {
   const { isPending, isError, error } = useSendRequest()
   const { response } = useResponseStore()
-  const { responseTab, setResponseTab } = useUIStore()
+  const { setResponseTab } = useUIStore()
   const [localTab, setLocalTab] = useState<ResponseTab>('body')
   const [copied, setCopied] = useState(false)
 
@@ -51,7 +51,7 @@ export default function ResponsePanel() {
   const showPreviewTab = response && isHtmlContent(response.headers)
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
+    <div className="flex flex-col h-full bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
       <AnimatePresence mode="wait">
         {isPending && (
           <motion.div
