@@ -151,7 +151,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
                     transition={{ duration: 0.18 }}
                     className="overflow-hidden"
                   >
-                    <Field label="Name" type="text" placeholder="Deepak Kumar"
+                    <Field label="Name" type="text" placeholder="Your Name"
                       value={name} onChange={setName} disabled={loading} />
                   </motion.div>
                 )}
